@@ -1,0 +1,99 @@
+n
+Size of the network, from input.
+
+n_l, n_m
+number of large banks and medium banks. A ratio of n.
+
+r
+Original risk-free interest rate. It is now set as the mean calibrated by the mean-reversion model, using the United States treasure bond daily data from 2013-01-01 to 2015-12-31.
+r_bar
+The mean calibrated by the mean-reversion stochastic model.
+r_alpha
+One of the coefficients of the mean-reversion stochastic model. It reflects the speed of reversion.
+r_sigma
+One of the coefficients of the mean-reversion stochastic model. It reflects the degree of diversion.
+
+s
+Original spread of the banks with lowest rating (BB in this case). It is now set as the mean calibrated by the mean-reversion model. The data we use to calibrate s are “BofA Merrill Lynch US Option-Adjusted Spread”.
+s_bar
+The mean calibrated by the mean-reversion stochastic model.
+s_alpha
+One of the coefficients of the mean-reversion stochastic model. It reflects the speed of reversion.
+r_sigma
+One of the coefficients of the mean-reversion stochastic model. It reflects the degree of diversion.
+
+alpha_l_cons 
+An array of 1 X number of rating levels (4 levels in this case: AA, A, BBB, BB)
+We do not include AAA because we find the mean of spread for AAA bonds calibrated from the past 3 years' data is higher than AA bonds, and banks are rarely rated as AAA.
+The coefficient reflecting the spread differences between different rating levels.
+alpha_l
+An array of n X 1.
+The alpha value for the banks. It is generated randomly with the probabilities for each level set in advance.
+
+rl
+An array of n X 1.
+The interest rate for all the banks.
+
+drl
+The interest rate difference from last period’s interest rate.
+
+D, C
+Arrays of deposit and cash and cash equivalents.
+D, C, are randomized.
+http://midsizebanks.com/coalition-members/
+G, the government bond is not calibered any more.
+
+Lb, Lc
+Arrays of amount of interbank and coco liabilities.
+The sum of the two comes from LDR, and are randomly allocated into the two category.
+
+Db_para, Cb_para
+Arrays with two float elements indicating mean and standard deviations of durations and convexities of interbank liabilities.
+Db_para Duration, [1.5, 0.2]
+Cb_para Convexity, [5, 0.5]
+
+Dc_para, Cc_para
+Arrays with two float elements indicating mean and standard deviations of durations and convexities of coco liabilities.
+Dc_para Duration, to be calibrated from common bond
+Cc_para Convexity, to be calibrated from common bond
+
+E
+Array of amount of bank equities.
+Comes from the leverage ratio, which is 0.08 for U.S. banks.
+
+weights
+A nXn array, each row indicates holders of bank i's liabilities and weights, and thus sum to 1.
+Assume that liabilities of large banks is hold by medium banks is maximum half of medium banks' average liabilities towards banks' size. Uniform distributed from 0 to cap.
+Medium bank: numbers of holders as a Poisson distribution with mean tm
+Large bank: numbers of medium holders and large holders as possion distribution with mean mtl and ltl
+uniform distributed in each kind of holdings
+The matrix will be a (s.n, s.n) matrix. Each row represents a bank whose bonds are held by other banks.
+Each col represents a bank that hold the bonds issued by the banks in each row.
+The weight matrix is separated into four parts:
+LL,LM;
+ML,MM.
+means: large bank held by large bank, large bank held by medium bank
+       medium bank held by large bank, medium bank held by medium bank
+The percentage of large bank's bonds held by large bank is calculated carefully, in order to make the percentage of large bank's bonds held by medium
+banks not so big that the medium banks' assets are not enough. 
+
+Ab
+asset toward banks. Calculated according to the weights and Lb.
+
+para_Af
+Parameters of asset towards firm size. To be calibrated
+also going to be use as long term mean.
+
+Af_mu, Af_sigma, Af_corr
+Parameters of mean reverse process of assets towards firm evolution equation.
+mean reverse indicate the economic wide shock and recover process.
+5 year mean reverse.
+sigma is nXn.
+mu and sigma to be calibrated, corr is random set.
+For Af_corr:
+The banks are seperate into different groups. Each group has a large bank and several small banks that is related to the large bank. 
+Small banks only have correlation with the other small banks from the same group. 
+Large banks have correlation with the small banks from the same group as well as other large banks. The allocation of number of small banks in each group is generated randomly by uniform distribution. 
+So, each large bank should have same number of small banks on average.
+
+

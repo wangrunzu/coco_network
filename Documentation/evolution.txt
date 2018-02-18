@@ -1,0 +1,26 @@
+implementation order:
+1. update interest
+2. update L_b
+3. update L_c
+4. update A_b
+5. update A_f
+6. recalculate equity
+
+function 1: interest update
+evolution function of base rate r and spread s
+update function of r^l for different level
+
+function 2: liabilities toward banks
+update D_b according to interest rate
+
+function 3: coco bonds
+for now, update similar to L_bs
+
+function 4: assets toward banks
+re-calculate using L_bs and weights
+
+function 5: assets toward firms
+evolute with the mean reverse processes
+
+function 6: equity
+re-calculate the equities of firms

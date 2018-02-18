@@ -1,0 +1,10 @@
+coco.m: main function
+
+	initialization.m: initialization function
+		Level.m: support function for initialize l, the credit rating of the banks
+		Init_weight.m: support function for initialize w, the holding weight matrix of the interbank liability
+		Init_Af_corr: support function for initialize Af_corr, the correlation matrix of Af.
+		Ab_calculation.m: function calculate Ab from Lb and w.
+
+	evolution.m: evolution function
+		
