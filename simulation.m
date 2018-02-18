@@ -17,6 +17,11 @@ atf_l = zeros(n, s.n);
 triggered = zeros(n, s.n);
 clear s;
 
+% set shock mode
+% 1 - day 20 industry shock
+% 2 - day 200 industry shock
+shock_flag = [true, true];
+
 parfor i=1:n
     
     % control for random number
@@ -29,7 +34,12 @@ parfor i=1:n
     atb_0(i, :) = s.Ab;
     atf_0(i, :) = s.Af;
     for j = 1:l
-        if j == 20 || j == 200
+        if j == 20 && shock_flag(1)
+            number = min(poissrnd(3), s.industry_n);
+            identifier = randperm(s.industry_n, number);
+            s.industry(identifier) = s.industry(identifier) * 0.894;
+        end
+        if j == 200 && shock_flag(2)
             number = min(poissrnd(3), s.industry_n);
             identifier = randperm(s.industry_n, number);
             s.industry(identifier) = s.industry(identifier) * 0.894;
