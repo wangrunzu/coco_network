@@ -3,10 +3,10 @@ function s = initialization(s)
     s.n_m = s.n - s.n_l; % number of middium banks
     s.dt = 1/365; % daily basis simulation
 
-    s.leverage_l = 0.08; % leverage ratio of large banks
-    s.leverage_m = 0.08; % leverage ratio of midium banks
-    s.LtDR_para_l = [0.25, 0.00]; % Debt to Deposit reatio parameters of large banks
-    s.LtDR_para_m = [0.25, 0.00]; % Debt to Deposit reatio parameters of midium banks
+    s.leverage_l = 0.1; % leverage ratio of large banks
+    s.leverage_m = 0.1; % leverage ratio of midium banks
+    s.LtDR_para_l = [0.1, 0.00]; % Debt to Deposit reatio parameters of large banks
+    s.LtDR_para_m = [0.1, 0.00]; % Debt to Deposit reatio parameters of midium banks
     s.D_para_l = [10^11, 0]; % large bank deposit parameters
     s.D_para_m = [1.5 * 10^10, 0]; % medium bank deposit parameters 
     s.C_para_l = [5 * 10^10, 0]; % large bank cash equivelent parameters
@@ -99,7 +99,9 @@ function s = initialization(s)
     % bank trigger flag
     s.triggered = zeros(1, 40);
     
+    % two layers flag
+    s.twolayers = true;
+    
     % system trigger flag
     s.systri = true;
-%     s.systri = false;
 end

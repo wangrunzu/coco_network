@@ -8,7 +8,9 @@ function s = evolution(s)
     s.E = s.C + s.Ab + s.Af - s.D - s.Lbi - s.Lc;
     
     % system trigger flag may close again once opened
-%     s.systri = sum(s.E) < sum(s.E0) * 0.4;
+    if s.twolayers
+        s.systri = sum(s.E) < sum(s.E0) * 0.4;
+    end
     
     if s.systri
         s = evol_bankruptcy_coco(s);

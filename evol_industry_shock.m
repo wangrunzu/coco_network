@@ -8,5 +8,5 @@ function s = evol_industry_shock(s)
         identifier = randperm(s.industry_n, number);
         s.industry(identifier) = s.industry(identifier) .* (1 + s.IS_para(1) + s.IS_para(2) .* randn()); % same shock to every industry
         s.IS_timer = s.IS_timer + exprnd(s.IS_fre);
-    end;
+    end
 end

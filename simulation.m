@@ -3,7 +3,7 @@
 clear;
 clc;
 
-s.n = 40;
+s.n = 40; % same as the initialization part in parfor loop
 l = 365;
 n = 10000;
 equity_0 = zeros(n, s.n);
@@ -17,18 +17,39 @@ atf_l = zeros(n, s.n);
 triggered = zeros(n, s.n);
 clear s;
 
+% set coco mode
+% 1 - if coco applies
+% 2 - if two layers setup applies, only validate if 1 is true
+coco_flag = [false, false];
+
 % set shock mode
 % 1 - day 20 industry shock
 % 2 - day 200 industry shock
-shock_flag = [true, true];
+shock_flag = [true, false];
 
 parfor i=1:n
     
     % control for random number
     rng(i * 10, 'twister');
     
+    % initialization
     s.n = 40; % number of banks
     s = initialization(s);
+    
+    % apply coco setting
+    if coco_flag(1)
+        if coco_flag(2)
+            s.twolayers = true;
+            s.systri = false;
+        else
+            s.twolayers = false;
+            s.systri = true;
+        end
+    else
+        s.twolayers = false;
+        s.systri = false;
+    end
+    
     equity_0(i, :) = s.E;
     c_0(i, :) = s.C;
     atb_0(i, :) = s.Ab;
@@ -88,15 +109,39 @@ clear i ind j l n s number identifier;
 
 %% Graph
 
-subplot(2,2,1);
-histogram(equity_ratio(:),'Normalization','probability');
-title('Equity');
-subplot(2,2,2);
-histogram(c_ratio(:),'Normalization','probability');
-title('Cash');
-subplot(2,2,3);
-histogram(atb_ratio(:),'Normalization','probability');
-title('Interbank Loan');
-subplot(2,2,4);
-histogram(atf_ratio(:),'Normalization','probability');
-title('Industry Loan');
+% subplot(2,2,1);
+% histogram(equity_ratio(:),'Normalization','probability');
+% title('Equity');
+% subplot(2,2,2);
+% histogram(c_ratio(:),'Normalization','probability');
+% title('Cash');
+% subplot(2,2,3);
+% histogram(atb_ratio(:),'Normalization','probability');
+% title('Interbank Loan');
+% subplot(2,2,4);
+% histogram(atf_ratio(:),'Normalization','probability');
+% title('Industry Loan');
+
+%% Save data
+
+if shock_flag(1)
+    if shock_flag(2)
+        str = "twoshocks";
+    else
+        str = "oneshock";
+    end
+else
+    str = "noshock";
+end
+
+if coco_flag(1)
+    if coco_flag(2)
+        str = str + "_syscoco.mat";
+    else
+        str = str + "_coco.mat";
+    end
+else
+    str = str + "_nococo.mat";
+end
+
+save("../output/"+str);

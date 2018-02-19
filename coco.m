@@ -4,6 +4,7 @@
 
 s.n = 40; % number of banks
 s = initialization(s);
+s0 = s; % back up for comparation
 
 %% simulation
 
@@ -29,11 +30,11 @@ for i=1:s.n
     atb(:, i) = atb(:, i) / atb(1, i) * 100;
 end
 
-figure;
-plot(equity);
-
-figure
-plot(atf);
-
-figure
-plot(atb);
+% figure;
+% plot(equity);
+% 
+% figure
+% plot(atf);
+% 
+% figure
+% plot(atb);

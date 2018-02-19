@@ -1,7 +1,9 @@
 %clear;
 clc;
 
-file_0 = ["sim_noshock_nococo.mat", "sim_noshock_syscoco.mat", "sim_noshock_coco.mat"];
+
+str = "../output/noshock_";
+file_0 = [str+"nococo.mat", str+"syscoco.mat", str+"coco.mat"];
 
 sta_0 = zeros(5, 9);
 
@@ -21,8 +23,8 @@ for i = 1:3
     end
 end
 
-% file_1 = ["sim_5_1shock_nococo.mat", "sim_5_1shock_syscoco.mat", "sim_5_1shock_coco.mat"];
-file_1 = ["sim_5_2shocks_nococo.mat", "sim_5_2shocks_syscoco.mat", "sim_5_2shocks_coco.mat"];
+str = "../output/twoshocks_";
+file_1 = [str+"nococo.mat", str+"syscoco.mat", str+"coco.mat"];
 
 sta_1 = zeros(5, 9);
 
