@@ -25,7 +25,8 @@ coco_flag = [false, false];
 % set shock mode
 % 1 - day 20 industry shock
 % 2 - day 200 industry shock
-shock_flag = [true, false];
+% 2% to 5% cash shock
+shock_flag = [true, true];
 
 parfor i=1:n
     
@@ -58,12 +59,12 @@ parfor i=1:n
         if j == 20 && shock_flag(1)
             number = min(poissrnd(3), s.industry_n);
             identifier = randperm(s.industry_n, number);
-            s.industry(identifier) = s.industry(identifier) * 0.894;
+            s.industry(identifier) = s.industry(identifier) * 0.90;
         end
         if j == 200 && shock_flag(2)
             number = min(poissrnd(3), s.industry_n);
             identifier = randperm(s.industry_n, number);
-            s.industry(identifier) = s.industry(identifier) * 0.894;
+            s.industry(identifier) = s.industry(identifier) * 0.90;
         end
         s = evolution(s);
     end
@@ -76,6 +77,7 @@ parfor i=1:n
         fprintf('%d simulation finished.\n', i);
     end
 end
+
 %% Statistics
 
 ind = all(~isnan(equity_l),2) .* all(~isnan(c_l),2) .* all(~isnan(atb_l),2) .* all(~isnan(atf_l),2) == 1;

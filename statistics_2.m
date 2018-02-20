@@ -1,9 +1,8 @@
 clear;
 clc;
 
-file = ["sim_noshock_nococo.mat", "sim_noshock_syscoco.mat", "sim_noshock_coco.mat"];
-% file = ["sim_5_1shock_nococo.mat", "sim_5_1shock_syscoco.mat", "sim_5_1shock_coco.mat"];
-% file = ["sim_5_2shocks_nococo.mat", "sim_5_2shocks_syscoco.mat", "sim_5_2shocks_coco.mat"];
+str = "../output/twoshocks_";
+file = [str+"nococo.mat", str+"syscoco.mat", str+"coco.mat"];
 
 figure;
 

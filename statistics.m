@@ -1,7 +1,7 @@
 clear;
 clc;
 
-str = "../output/oneshock_";
+str = "../output/noshock_";
 file = [str+"nococo.mat", str+"syscoco.mat", str+"coco.mat"];
 
 sta = zeros(5, 9);

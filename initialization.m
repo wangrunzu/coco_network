@@ -5,8 +5,8 @@ function s = initialization(s)
 
     s.leverage_l = 0.1; % leverage ratio of large banks
     s.leverage_m = 0.1; % leverage ratio of midium banks
-    s.LtDR_para_l = [0.1, 0.00]; % Debt to Deposit reatio parameters of large banks
-    s.LtDR_para_m = [0.1, 0.00]; % Debt to Deposit reatio parameters of midium banks
+    s.LtDR_para_l = [0.075, 0.00]; % Debt to Deposit reatio parameters of large banks
+    s.LtDR_para_m = [0.075, 0.00]; % Debt to Deposit reatio parameters of midium banks
     s.D_para_l = [10^11, 0]; % large bank deposit parameters
     s.D_para_m = [1.5 * 10^10, 0]; % medium bank deposit parameters 
     s.C_para_l = [5 * 10^10, 0]; % large bank cash equivelent parameters
@@ -19,7 +19,7 @@ function s = initialization(s)
     % initialize cash shock parameters
     s.CS_fre = 14 / 365;
     s.CS_aver = s.n / 10;
-    s.CS_para = [0, 0.01];
+    s.CS_para = [0, 0.01216]; % 90% chance with in [-0.02, 0.02]
     s.CS_timer = exprnd(s.CS_fre);
     
     % initialize intereste rate
@@ -90,7 +90,7 @@ function s = initialization(s)
     % initialize industry shock parameters
     s.IS_fre = 0.5;
     s.IS_aver = 3;
-    s.IS_para = [0, 0.0645];
+    s.IS_para = [0, 0.0608]; % 90% chance in region [-0.1, 0.1]
     s.IS_timer = exprnd(s.IS_fre);
     
     % store init Z-score
