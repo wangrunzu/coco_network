@@ -27,7 +27,7 @@ dp = (1-pp)/2; % The range size the percentage can fluctuate in.
 
 LL_rng = [pp-dp,pp+dp]; % The range of the percentage of large banks' bonds held by large banks.
 ML_rng = [0.5,0.8]; % The range of the percentage of medium banks' bonds held by large banks.
-limit = 5; % [def:1] The ratio limit that used in [eq:2] below. 
+limit = 15; % [def:1] The ratio limit that used in [eq:2] below. 
 % The [def:1] constrains that the medium bank cannot hold too large value of bonds issued by other banks.
 % <- ___Part 1.___ Decide the percentage allocation among large banks and medium banks.
 

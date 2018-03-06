@@ -1,7 +1,7 @@
 clear;
 clc;
 
-str = "../output/twoshocks_";
+str = "../output/cash_oneshock_";
 file = [str+"nococo.mat", str+"syscoco.mat", str+"coco.mat"];
 
 figure;

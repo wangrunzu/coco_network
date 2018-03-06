@@ -1,11 +1,11 @@
-%clear;
+clear;
 clc;
 
 
 str = "../output/noshock_";
 file_0 = [str+"nococo.mat", str+"syscoco.mat", str+"coco.mat"];
 
-sta_0 = zeros(5, 9);
+sta_0 = zeros(8, 9);
 
 for i = 1:3
     load(file_0(i));
@@ -20,13 +20,16 @@ for i = 1:3
         sta_0(3, ind(j)) = quantile(data_2(:, j), 0.1);
         sta_0(4, ind(j)) = quantile(data_2(:, j), 0.05);
         sta_0(5, ind(j)) = quantile(data_2(:, j), 0.01);
+        sta_0(6, ind(j)) = quantile(data_2(:, j), 0.5) - quantile(data_2(:, j), 0.1);
+        sta_0(7, ind(j)) = quantile(data_2(:, j), 0.5) - quantile(data_2(:, j), 0.05);
+        sta_0(8, ind(j)) = quantile(data_2(:, j), 0.5) - quantile(data_2(:, j), 0.01);
     end
 end
 
-str = "../output/twoshocks_";
+str = "../output/oneshock_";
 file_1 = [str+"nococo.mat", str+"syscoco.mat", str+"coco.mat"];
 
-sta_1 = zeros(5, 9);
+sta_1 = zeros(8, 9);
 
 for i = 1:3
     load(file_1(i));
@@ -41,6 +44,9 @@ for i = 1:3
         sta_1(3, ind(j)) = quantile(data_2(:, j), 0.1);
         sta_1(4, ind(j)) = quantile(data_2(:, j), 0.05);
         sta_1(5, ind(j)) = quantile(data_2(:, j), 0.01);
+        sta_1(6, ind(j)) = quantile(data_2(:, j), 0.5) - quantile(data_2(:, j), 0.1);
+        sta_1(7, ind(j)) = quantile(data_2(:, j), 0.5) - quantile(data_2(:, j), 0.05);
+        sta_1(8, ind(j)) = quantile(data_2(:, j), 0.5) - quantile(data_2(:, j), 0.01);
     end
 end
 

@@ -1,10 +1,10 @@
 clear;
 clc;
 
-str = "../output/noshock_";
+str = "../output/oneshock_";
 file = [str+"nococo.mat", str+"syscoco.mat", str+"coco.mat"];
 
-sta = zeros(5, 9);
+sta = zeros(8, 9);
 
 for i = 1:3
     load(file(i));
@@ -16,8 +16,11 @@ for i = 1:3
     for j = 1:3
         sta(1, ind(j)) = mean(data_1(:, j));
         sta(2, ind(j)) = std(data_1(:, j));
-        sta(3, ind(j)) = quantile(data_2(:, j), 0.5) - quantile(data_2(:, j), 0.1);
-        sta(4, ind(j)) = quantile(data_2(:, j), 0.5) - quantile(data_2(:, j), 0.05);
-        sta(5, ind(j)) = quantile(data_2(:, j), 0.5) - quantile(data_2(:, j), 0.01);
+        sta(3, ind(j)) = quantile(data_2(:, j), 0.1);
+        sta(4, ind(j)) = quantile(data_2(:, j), 0.05);
+        sta(5, ind(j)) = quantile(data_2(:, j), 0.01);
+        sta(6, ind(j)) = quantile(data_2(:, j), 0.5) - quantile(data_2(:, j), 0.1);
+        sta(7, ind(j)) = quantile(data_2(:, j), 0.5) - quantile(data_2(:, j), 0.05);
+        sta(8, ind(j)) = quantile(data_2(:, j), 0.5) - quantile(data_2(:, j), 0.01);
     end
 end

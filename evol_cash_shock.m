@@ -8,5 +8,5 @@ function s = evol_cash_shock(s)
         identifier = randperm(s.n, number);
         s.C(identifier) = s.C(identifier) .* (1 + s.CS_para(1) + s.CS_para(2) .* randn(1, number));
         s.CS_timer = s.CS_timer + exprnd(s.CS_fre);
-    end;
+    end
 end

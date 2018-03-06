@@ -20,13 +20,14 @@ clear s;
 % set coco mode
 % 1 - if coco applies
 % 2 - if two layers setup applies, only validate if 1 is true
-coco_flag = [false, false];
+coco_flag = [true, true];
 
 % set shock mode
 % 1 - day 20 industry shock
 % 2 - day 200 industry shock
-% 2% to 5% cash shock
-shock_flag = [true, true];
+% 3 - day 20 cash shock
+% 4 - day 200 cash shock
+shock_flag = [false, false, true, false];
 
 parfor i=1:n
     
@@ -61,10 +62,20 @@ parfor i=1:n
             identifier = randperm(s.industry_n, number);
             s.industry(identifier) = s.industry(identifier) * 0.90;
         end
+        if j == 20 && shock_flag(3)
+            number = min(poissrnd(2), s.n_l)
+            identifier = randperm(s.n_l, number);
+            s.C(identifier) = s.C(identifier) * 0.85;
+        end
         if j == 200 && shock_flag(2)
             number = min(poissrnd(3), s.industry_n);
             identifier = randperm(s.industry_n, number);
             s.industry(identifier) = s.industry(identifier) * 0.90;
+        end
+        if j == 200 && shock_flag(4)
+            number = min(poissrnd(2), s.n_l)
+            identifier = randperm(s.n_l, number);
+            s.C(identifier) = s.C(identifier) * 0.85;
         end
         s = evolution(s);
     end
@@ -126,8 +137,8 @@ clear i ind j l n s number identifier;
 
 %% Save data
 
-if shock_flag(1)
-    if shock_flag(2)
+if shock_flag(1) || shock_flag(3)
+    if shock_flag(2) || shock_flag(4)
         str = "twoshocks";
     else
         str = "oneshock";
@@ -144,6 +155,10 @@ if coco_flag(1)
     end
 else
     str = str + "_nococo.mat";
+end
+
+if shock_flag(3) || shock_flag(4)
+    str = "cash_" + str;
 end
 
 save("../output/"+str);
