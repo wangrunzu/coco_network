@@ -20,14 +20,14 @@ clear s;
 % set coco mode
 % 1 - if coco applies
 % 2 - if two layers setup applies, only validate if 1 is true
-coco_flag = [true, true];
+coco_flag = [false, false];
 
 % set shock mode
 % 1 - day 20 industry shock
 % 2 - day 200 industry shock
 % 3 - day 20 cash shock
 % 4 - day 200 cash shock
-shock_flag = [false, false, true, false];
+shock_flag = [true, false, true, false];
 
 parfor i=1:n
     
@@ -158,7 +158,11 @@ else
 end
 
 if shock_flag(3) || shock_flag(4)
-    str = "cash_" + str;
+    if shock_flag(1) || shock_flag(2)
+        str = "double_" + str;
+    else
+        str = "cash_" + str;
+    end
 end
 
 save("../output/"+str);
