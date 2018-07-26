@@ -1,14 +1,15 @@
 clear;
 clc;
 
-file_prefix = ["../output/noshock_", "../output/oneshock_", "../output/twoshocks_"];
+file_folder = "../output/low_leverage_ratio/";
+file_prefix = ["noshock_", "oneshock_", "twoshocks_"];
 file = ["nococo.mat", "syscoco.mat", "coco.mat"];
 
 data_all = zeros(1, 9);
 
 for i=1:3
     for j=1:3
-        load(file_prefix(i)+file(j));
+        load(file_folder+file_prefix(i)+file(j));
         data = [sum(equity_l<=0, 2), ...
                 sum(equity_l(:, 1:5)<=0, 2), ...
                 sum(equity_l(:, 6:end)<=0, 2)];

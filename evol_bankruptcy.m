@@ -6,7 +6,7 @@ function s = evol_bankruptcy(s)
             Lb_back = Lb_back_mid(ind, :) * 0.6;
         else
             Lb_back = sum(Lb_back_mid(ind, :)) * 0.6;
-        end;
+        end
         s.C = s.C + Lb_back;
         s.C(ind) = 0;
         s.Ab(ind) = 0;
@@ -22,5 +22,5 @@ function s = evol_bankruptcy(s)
         s = Ab_calculation(s);
         s.E = s.C + s.Ab + s.Af - s.D - s.Lbi - s.Lc;
         ind = s.E < 0;
-    end;
+    end
 end

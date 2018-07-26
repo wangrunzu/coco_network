@@ -9,7 +9,7 @@ function s = evolution(s)
     
     % system trigger flag may close again once opened
     if s.twolayers
-        s.systri = mean(s.E ./ s.E0)<0.6;
+        s.systri = mean(s.E ./ s.E0) < 0.6; % system coco trigger
     end
     
     if s.systri

@@ -3,6 +3,7 @@ function s = initialization(s)
     s.n_m = s.n - s.n_l; % number of middium banks
     s.dt = 1/365; % daily basis simulation
 
+    % leverage ratio is 0.1 in default
     s.leverage_l = 0.1; % leverage ratio of large banks
     s.leverage_m = 0.1; % leverage ratio of midium banks
     s.LtDR_para_l = [0.075, 0.00]; % Debt to Deposit reatio parameters of large banks

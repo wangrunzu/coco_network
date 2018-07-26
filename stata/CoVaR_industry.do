@@ -1,5 +1,5 @@
 clear
-import delimited C:\Users\wang0040\Documents\Project\coco_network\output\CoVaR_industry.csv
+import delimited C:\Users\wang0040\Documents\Project\coco_network\output\high_leverage_ratio\CoVaR_industry.csv
 
 qreg system 1.one 1.single 1.one##1.single if (two==0) & (dual==0), quantile(0.05)
 outreg2 using C:\Users\wang0040\Documents\Project\coco_network\output\CoVaR_industry_ouput.xls, ///

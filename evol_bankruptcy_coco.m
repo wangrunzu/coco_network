@@ -1,5 +1,5 @@
 function s = evol_bankruptcy_coco(s)
-    ind = s.E < s.E0 * 0.4;
+    ind = s.E < s.E0 * s.ict; % individual coco trigger
     s.triggered(ind) = 1;
     s.E(ind) = s.E(ind) + s.Lc(ind);
     s.Lc(ind) = 0;
@@ -10,7 +10,7 @@ function s = evol_bankruptcy_coco(s)
             Lb_back = Lb_back_mid(ind, :) * 0.6;
         else
             Lb_back = sum(Lb_back_mid(ind, :)) * 0.6;
-        end;
+        end
         s.C = s.C + Lb_back;
         s.C(ind) = 0;
         s.Ab(ind) = 0;
@@ -30,5 +30,5 @@ function s = evol_bankruptcy_coco(s)
         s.E(ind) = s.E(ind) + s.Lc(ind);
         s.Lc(ind) = 0;
         ind = s.E < 0;
-    end;
+    end
 end
