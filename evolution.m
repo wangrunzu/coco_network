@@ -9,13 +9,17 @@ function s = evolution(s)
     
     % system trigger flag may close again once opened
     if s.twolayers
-        s.systri = mean(s.E ./ s.E0) < s.sct; % system coco trigger
+        s.systri = mean(s.E ./ (s.C + s.Ab + s.Af)) < s.sct; % system coco trigger
     end
     
-    if s.systri
-        s = evol_bankruptcy_coco(s);
+    if s.twotranches
+        s = evol_bankruptcy_two_tranches(s);
     else
-        s = evol_bankruptcy(s);
+        if s.systri
+            s = evol_bankruptcy_coco(s);
+        else
+            s = evol_bankruptcy(s);
+        end
+        s = evol_credit_rating(s);
     end
-    s = evol_credit_rating(s);
 end

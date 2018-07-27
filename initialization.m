@@ -3,9 +3,9 @@ function s = initialization(s)
     s.n_m = s.n - s.n_l; % number of middium banks
     s.dt = 1/365; % daily basis simulation
 
-    % leverage ratio is 0.1 in default
-    s.leverage_l = 0.1; % leverage ratio of large banks
-    s.leverage_m = 0.1; % leverage ratio of midium banks
+    lr = 0.1; % leverage ratio is 0.1 in default
+    s.leverage_l = lr; % leverage ratio of large banks
+    s.leverage_m = lr; % leverage ratio of midium banks
     s.LtDR_para_l = [0.075, 0.00]; % Debt to Deposit reatio parameters of large banks
     s.LtDR_para_m = [0.075, 0.00]; % Debt to Deposit reatio parameters of midium banks
     s.D_para_l = [10^11, 0]; % large bank deposit parameters
@@ -103,10 +103,17 @@ function s = initialization(s)
     % two layers flag
     s.twolayers = true;
     
+    % two tranches flag
+    s.twotranches = true;
+    
+    % setup the junior tranch fraction
+    s.junior = 0.5;
+    s.junior_triggered = zeros(1, s.n)==1;
+    
     % system trigger flag
     s.systri = true;
     
-    % coco_trigger_level
-    s.sct = 0.6;
-    s.ict = 0.4;
+    % setup coco triggers
+    s.sct = 0.6 * lr;
+    s.ict = 0.4 * lr;
 end

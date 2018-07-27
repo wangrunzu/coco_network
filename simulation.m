@@ -1,4 +1,4 @@
-function r = simulation(coco_flag, shock_flag, sct, ict)
+function r = simulation(coco_flag, shock_flag, junior)
 % this funcion simulates the banking system using given coco design and shock design   
     %% Simulation
 
@@ -20,7 +20,8 @@ function r = simulation(coco_flag, shock_flag, sct, ict)
 
     % set coco mode
     % 1 - if coco applies
-    % 2 - if two layers setup applies, only validate if 1 is true
+    % 2 - if two layers setup applies, only valid if 1 is true
+    % 3 - if two tranches stetup applies, only valid if 1 & 2 is true
     % coco_flag = [true, true];
 
     % set shock mode
@@ -38,20 +39,30 @@ function r = simulation(coco_flag, shock_flag, sct, ict)
         % initialization
         s.n = 40; % number of banks
         s = initialization(s);
-        s.sct = sct;
-        s.ict = ict;
+        
+        % overwrite junior tranch level
+        s.junior = junior;
 
-        % apply coco setting
+        % overwrite coco setting
         if coco_flag(1)
             if coco_flag(2)
-                s.twolayers = true;
-                s.systri = false;
+                if coco_flag(3)
+                    s.twolayers = true;
+                    s.twotranches = true;
+                    s.systri = false;
+                else
+                    s.twolayers = true;
+                    s.twotranches = false;
+                    s.systri = false;
+                end
             else
                 s.twolayers = false;
+                s.twotranches = false;
                 s.systri = true;
             end
         else
             s.twolayers = false;
+            s.twotranches = false;
             s.systri = false;
         end
 
@@ -168,7 +179,7 @@ function r = simulation(coco_flag, shock_flag, sct, ict)
         end
     end
 
-    save("../output/individual_trigger/"+num2str(sct)+"_"+num2str(ict)+"_"+str);
+    save("../output/two_tranches/"+num2str(junior)+"_"+str);
     
     r = 0;
 end
