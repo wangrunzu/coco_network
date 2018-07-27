@@ -105,4 +105,8 @@ function s = initialization(s)
     
     % system trigger flag
     s.systri = true;
+    
+    % coco_trigger_level
+    s.sct = 0.6;
+    s.ict = 0.4;
 end

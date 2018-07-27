@@ -1,4 +1,4 @@
-function r = simulation(coco_flag, shock_flag, ict)
+function r = simulation(coco_flag, shock_flag, sct, ict)
 % this funcion simulates the banking system using given coco design and shock design   
     %% Simulation
 
@@ -38,6 +38,7 @@ function r = simulation(coco_flag, shock_flag, ict)
         % initialization
         s.n = 40; % number of banks
         s = initialization(s);
+        s.sct = sct;
         s.ict = ict;
 
         % apply coco setting
@@ -167,7 +168,7 @@ function r = simulation(coco_flag, shock_flag, ict)
         end
     end
 
-    save("../output/individual_trigger/"+num2str(ict)+"_"+str);
+    save("../output/individual_trigger/"+num2str(sct)+"_"+num2str(ict)+"_"+str);
     
     r = 0;
 end

@@ -1,30 +1,72 @@
 clear;
 clc;
 
-file_folder = "../output/individual_trigger/";
+%% Read Data
+
+file_folder = "../output/coco_trigger/";
 file_prefix = ["noshock_", "oneshock_", "twoshocks_"];
 file = ["nococo.mat", "coco.mat", "syscoco.mat"];
 
-data_all = zeros(1, 10);
+data_all = [];
 
-for ict = 0.2:0.05:0.6
-    for i=1:3
-        for j=1:3
-            load(file_folder+num2str(ict)+"_"+file_prefix(i)+file(j));
-            data = [sum(equity_l, 2)./sum(equity_0, 2), ...
-                    sum(equity_l(:, 1:5), 2)./sum(equity_0(:, 1:5), 2), ...
-                    sum(equity_l(:, 6:end), 2)./sum(equity_0(:, 6:end), 2)];
+for sct = 0.2:0.05:0.6
+    for ict = 0.2:0.05:0.6
+        for i = 1:3
+            for j = 1:3
+                load(file_folder+num2str(sct)+"_"+num2str(ict)+"_"+file_prefix(i)+file(j));
+                data = [sum(equity_l, 2)./sum(equity_0, 2), ...
+                        sum(equity_l(:, 1:5), 2)./sum(equity_0(:, 1:5), 2), ...
+                        sum(equity_l(:, 6:end), 2)./sum(equity_0(:, 6:end), 2)];
 
-            data(:, 4:10) = 0;
+                data(:, 4:10) = 0;
 
-            data(:, i+3) = 1;
-            data(:, j+6) = 1;
-            data(:, 10) = ict;
+                data(:, i+3) = 1;
+                data(:, j+6) = 1;
+                data(:, 10) = round(sct*100);
+                data(:, 11) = round(ict*100);
 
-            data_all = [data_all; data];
+                data_all = [data_all; data];
+            end
         end
     end
 end
 
-data_all(1, :) = [];
-csvwrite("sample_equity_ratio.csv", data_all)
+%% Statistics
+
+d = [7, 8; 7, 9; 8, 9];
+sta_all = [];
+n = 1;
+for sct = 0.2:0.05:0.6
+    sta_ict = [];
+    data_ict = data_all(data_all(:, 10)==round(sct*100), :);
+    for ict = 0.2:0.05:0.6
+        sta = [];
+        data = data_ict(data_ict(:, 11)==round(ict*100), :);
+        for i = 2:3
+            for j = 1:3
+                data_1 = data((data(:, 4)==1)&(data(:, d(j, 1))==1), 1);
+                data_2 = data((data(:, 4)==1)&(data(:, d(j, 2))==1), 1);
+                data_3 = data((data(:, 3+i)==1)&(data(:, d(j, 1))==1), 1);
+                data_4 = data((data(:, 3+i)==1)&(data(:, d(j, 2))==1), 1);
+                did = - quantile(data_4, 0.05) + quantile(data_3, 0.05) ...
+                      + quantile(data_2, 0.05) - quantile(data_1, 0.05);
+                sta = [sta, did];
+            end
+        end
+        sta_ict = [sta_ict; sta];
+    end
+    sta_all(n, :, :) = sta_ict;
+    n = n + 1;
+end
+
+%% Plot
+
+[x, y] = meshgrid(0.2:0.05:0.6, 0.2:0.05:0.6);
+figure;
+surfc(x, y, sta_all(:, :, 3)');
+xlabel("sct");
+ylabel("ict");
+figure;
+surfc(x, y, sta_all(:, :, 6)');
+xlabel("sct");
+ylabel("ict");
