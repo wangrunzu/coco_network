@@ -3,7 +3,7 @@ clc;
 
 %% Read Data
 
-file_folder = "../output/coco_trigger/";
+file_folder = "../output/coco_triggers/";
 file_prefix = ["noshock_", "oneshock_", "twoshocks_"];
 file = ["nococo.mat", "coco.mat", "syscoco.mat"];
 
@@ -62,6 +62,7 @@ end
 %% Plot
 
 [x, y] = meshgrid(0.2:0.05:0.6, 0.2:0.05:0.6);
+
 figure;
 surfc(x, y, sta_all(:, :, 3)');
 xlabel("sct");

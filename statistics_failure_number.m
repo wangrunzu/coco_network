@@ -3,7 +3,7 @@ clc;
 
 %% Read Data
 
-file_folder = "../output/coco_trigger/";
+file_folder = "../output/coco_triggers/";
 file_prefix = ["noshock_", "oneshock_", "twoshocks_"];
 file = ["nococo.mat", "coco.mat", "syscoco.mat"];
 

@@ -1,4 +1,4 @@
-function r = simulation(coco_flag, shock_flag, junior)
+function r = simulation_coco_triggers(coco_flag, shock_flag, indivisual_trigger, system_trigger)
 % this funcion simulates the banking system using given coco design and shock design   
     %% Simulation
 
@@ -40,8 +40,9 @@ function r = simulation(coco_flag, shock_flag, junior)
         s.n = 40; % number of banks
         s = initialization(s);
         
-        % overwrite junior tranch level
-        s.junior = junior;
+        % overwrite coco triggers
+        s.sct = system_trigger * s.leverage_l;
+        s.ict = indivisual_trigger * s.leverage_l;
 
         % overwrite coco setting
         if coco_flag(1)
@@ -179,7 +180,7 @@ function r = simulation(coco_flag, shock_flag, junior)
         end
     end
 
-    save("../output/two_tranches/"+num2str(junior)+"_"+str);
+    save("../output/coco_triggers/"+num2str(sys)+"_"+num2str(ind)+"_"+str);
     
     r = 0;
 end
